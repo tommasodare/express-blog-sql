@@ -1,4 +1,4 @@
-/* const arrayPosts = require('../data/posts_array') */
+const arrayPosts = require('../data/posts_array')
 const connection = require('../data/db');
 
 function index(req, res) {
@@ -131,7 +131,7 @@ function modify(req, res) {
 
 function destroy(req, res) {
 
-    const { id } = req.params
+    const id = req.params.id
 
     connection.query('DELETE FROM posts WHERE id = ?', [id], (err) => {
         if (err) return res.status(500).json({ error: 'Failed to delete post' })
