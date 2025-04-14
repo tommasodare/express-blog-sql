@@ -11,32 +11,22 @@ function index(req, res) {
         if (err) return res.status(500).json({ error: 'database query failes' })
         res.json(results)
     })
-
 }
 
 function show(req, res) {
-    //res.json(arrayPosts[req.params.id - 1])
 
-    // Recupero l'id dall'URL
-    const postSlug = req.params.slug
+    // Recuperiamo l'id dall'URL
+    const id = req.params.id
 
-    // Cerco il post tramite slug
-    const post = arrayPosts.find(post => post.slug === postSlug)
+    const sql = 'SELECT * FROM posts WHERE id = ?'
 
-    // Lo restituisco in formato JSON
+    // Eseguiamo la query
+    connection.query(sql, [id], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Database query failed' });
+        if (results.length === 0) return res.status(404).json({ error: 'Post not found' });
+        res.json(results[0]);
+    });
 
-
-    if (!post) {
-        res.status(404)
-
-        return res.json({
-            status: 404,
-            error: "Not Found",
-            message: " Post non trovato"
-        })
-    } else {
-        res.json(post)
-    }
 }
 
 function store(req, res) {
