@@ -1,4 +1,5 @@
 const arrayPosts = require('../data/posts_array')
+const connection = require('../data/db');
 
 function index(req, res) {
 
@@ -13,7 +14,7 @@ function index(req, res) {
     }
 
     res.json(filteredArrayPosts)
-    
+
 }
 
 function show(req, res) {
@@ -88,7 +89,7 @@ function update(req, res) {
             error: "Not Found",
             message: " Post non trovato"
         })
-        
+
     }
 
     // Aggiorno il post
@@ -125,7 +126,7 @@ function modify(req, res) {
             error: "Not Found",
             message: " Post non trovato"
         })
-        
+
     }
 
     // Aggiorno il post
