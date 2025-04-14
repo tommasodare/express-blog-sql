@@ -140,32 +140,13 @@ function modify(req, res) {
 }
 
 function destroy(req, res) {
-    //res.send(`Delete post with id: ${req.params.id}`)
 
-    //Recupero l'ID dall'URL
-    const postSlug = req.params.slug
+    const { id } = req.params
 
-    // Cerco il post tramite ID
-    const post = arrayPosts.find(post => post.slug === postSlug)
-
-    if (!post) {
-        res.status(404)
-
-        return res.json({
-            status: 404,
-            error: "Not Found",
-            message: " Post non trovato"
-        })
-    } else {
-        res.status(204)
-    }
-
-    // Rimuovo la pizza dall'array
-    arrayPosts.splice(arrayPosts.indexOf(post), 1)
-
-
-    // Stampo la lista aggiornata
-    console.log(arrayPosts);
+    connection.query('DELETE FROM posts WHERE id = ?', [id], (err) => {
+        if (err) return res.status(500).json({ error: 'Failed to delete post' })
+        res.sendStatus(204)
+    })
 
 }
 
